@@ -1,0 +1,38 @@
+---
+title: "Week 7"
+author: "Richy Varghese"
+date: "February 16, 2019"
+output: html_document
+---
+
+###Filtering data with filter()
+```{r}
+library(dplyr)
+bikeVendors <- read.csv("C:/Users/Richy/Desktop/Harrisburg University/Exploratory Data Analytics/FinalProject/ANLY506_RichyVarghese_FinalProject/Data/bikeVendors.csv", header = TRUE)
+#Filtering where bike's prices are between a range of values
+filter(bikeVendors, price>8000 & price<10000)
+```
+
+###Arranging data with arrange()
+```{r}
+#Arranging bike data by highest to lowest price
+arrange(bikeVendors, desc(price))
+```
+
+###Selecting data with select()
+```{r}
+#Selecting 3 columns out of bike data
+select(bikeVendors, model, category1, price)
+```
+
+###Adding new variable with mutate()
+```{r}
+#Adding a variable to calculate the total profit amount made by one vendor
+mutate(bikeVendors, profitAlbCyc = Albuquerque.Cycles*price)
+```
+
+###Grouped summaries with summarise()
+```{r}
+#Getting the mean prices across all bike models
+summarise(bikeVendors, meanprice = mean(price))
+```

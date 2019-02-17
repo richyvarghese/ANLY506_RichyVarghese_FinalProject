@@ -1,0 +1,29 @@
+---
+title: "Week 9"
+author: "Richy Varghese"
+date: "February 16, 2019"
+output: html_document
+---
+
+###Visualizing distributions
+```{r}
+library(tidyverse)
+bikeVendors <- read.csv("C:/Users/Richy/Desktop/Harrisburg University/Exploratory Data Analytics/FinalProject/ANLY506_RichyVarghese_FinalProject/Data/bikeVendors.csv", header = TRUE)
+#Creating a bar chart to plot categorical variable, frame
+ggplot(data = bikeVendors) + geom_bar(mapping = aes(x = frame))
+#Creating a histogram to plot continuous variable, price
+ggplot(data = bikeVendors) + geom_histogram(mapping = aes(x = price), binwidth = 500)
+#Creating a histogram of a smaller dataset
+smaller <- bikeVendors %>% filter(price<5000)
+ggplot(data = smaller) + geom_histogram(mapping = aes(x = price), binwidth = 500)
+#Creating a frequency plot to overlay multiple histograms
+ggplot(data = smaller, mapping = aes(x = price, colour = frame)) + geom_freqpoly(binwidth = 500)
+ggplot(data = bikeVendors, mapping = aes(x = price, y = ..density..)) + geom_freqpoly(mapping = aes(colour = frame), binwidth = 500)
+#Creating a boxplot to look at the distribution
+ggplot(data = bikeVendors, mapping = aes(x = frame, y = price)) + geom_boxplot()
+ggplot(data = bikeVendors, mapping = aes(x = frame, y = price)) + geom_boxplot() + coord_flip()
+#creating a bubble chart with 2 categorical variables
+ggplot(data = bikeVendors) +  geom_count(mapping = aes(x = category1, y = category2))
+#creating a heatmap with 2 categorical variables
+bikeVendors %>% count(category1, category2) %>% ggplot(mapping = aes(x = category1, y = category2)) + geom_tile(mapping = aes(fill = n))
+```

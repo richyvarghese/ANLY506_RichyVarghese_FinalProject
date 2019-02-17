@@ -1,0 +1,70 @@
+---
+title: "Week 2"
+author: "Richy Varghese"
+date: "February 16, 2019"
+output: html_document
+---
+
+```{r}
+#Reading data
+bikeVendors <- read.csv("C:/Users/Richy/Desktop/Harrisburg University/Exploratory Data Analytics/FinalProject/ANLY506_RichyVarghese_FinalProject/Data/bikeVendors.csv", header = TRUE)
+```
+
+###Checking the number of rows and columns
+```{r}
+#Function to check number of rows
+nrow(bikeVendors)
+#Function to check number of columns
+ncol(bikeVendors)
+```
+
+###Running str() to understand the data structure, followed by looking at the top and bottom of the dataset
+```{r}
+str(bikeVendors)
+head(bikeVendors)
+tail(bikeVendors)
+```
+
+###Running table() to get the counts
+```{r}
+#Getting the counts of models per frame
+table(bikeVendors$frame)
+#Getting the counts of model per category1
+table(bikeVendors$category1)
+```
+
+###Running summary() to get summary of a variable
+```{r}
+#Getting the summary of model prices
+summary(bikeVendors$price)
+#Getting the spread of these prices per decile
+quantile(bikeVendors$price, seq(0, 1, 0.1))
+```
+
+###Ranking model frames based on price
+```{r}
+library(dplyr)
+#Creating ranks
+ranks <- group_by(bikeVendors, frame, model) %>%
+          summarize(bikeVendors = mean(price)) %>%
+          as.data.frame %>%
+          arrange(desc(bikeVendors))
+#Top 10 ranks
+head(ranks, 10)
+#Bottom 10 ranks
+tail(ranks, 10)
+```
+
+###Counting number of rows of Carbon and Aluminium model by using filter()
+```{r}
+#Carbon models
+filter(bikeVendors, frame == "Carbon") %>% nrow
+#Carbon models by category1
+filter(bikeVendors, frame == "Carbon" & category1 == "Road") %>% nrow
+filter(bikeVendors, frame == "Carbon" & category1 == "Mountain") %>% nrow
+#Aluminium models
+filter(bikeVendors, frame == "Aluminum") %>% nrow
+#Aluminium models by category1
+filter(bikeVendors, frame == "Aluminum" & category1 == "Road") %>% nrow
+filter(bikeVendors, frame == "Aluminum" & category1 == "Mountain") %>% nrow
+```

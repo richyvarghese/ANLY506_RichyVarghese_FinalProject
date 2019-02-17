@@ -1,0 +1,52 @@
+---
+title: "Week 1"
+author: "Richy Varghese"
+date: "February 16, 2019"
+output: html_document
+---
+
+###Functions to get and set working directory
+```{r}
+getwd()
+setwd("C:/Users/Richy/Desktop/Harrisburg University/Exploratory Data Analytics")
+getwd()
+```
+
+###Function to read data from csv
+```{r}
+gutten <- read.csv("C:/Users/Richy/Desktop/Harrisburg University/Exploratory Data Analytics/FinalProject/ANLY506_RichyVarghese_FinalProject/Data/Data_CodePortfolio/gutten.csv", header = TRUE)
+```
+
+###Functions to check data structure (str), check the first few rows (head) and the last few rows (tail) of the data set, and to check NA's in columns
+```{r}
+#Function to check the data structure
+str(gutten)
+#Function to check the first few rows of the dataset
+head(gutten)
+#Function to check the last few rows of the dataset
+tail(gutten)
+#Function to get count of NA's in each column
+colSums(is.na(gutten))
+```
+
+###Functions to check ranges of data, and spread of data
+```{r}
+#Function to check range of each variable in the dataset
+range(gutten$Height)
+range(gutten$Diameter)
+#This gave NA NA as output since there are NA's in the columnm, hence we need to remove NAs
+range(gutten$Diameter, na.rm=TRUE)
+#Function to check the number of observations under each site
+table(gutten$Site)
+```
+
+###Functions to create boxplots, scatter plots and histograms
+```{r}
+#Functions to create boxplots, particularly to see the spread of tree heights per site
+boxplot(Height~Site, data = gutten, ylab = "Height", xlab = "Site")
+#Function to create scatter plots, particularly the relationship between height and volume
+scatter.smooth(gutten$Height, gutten$Volume)
+#Function to create histograms, partcularly of tree heights by site
+library(lattice)
+histogram( ~ Height | Site, data = gutten)
+```

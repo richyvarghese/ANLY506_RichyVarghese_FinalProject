@@ -1,0 +1,24 @@
+---
+title: "Week 10"
+author: "Richy Varghese"
+date: "February 16, 2019"
+output: html_document
+---
+
+###Plotting
+```{r}
+bikeVendors <- read.csv("C:/Users/Richy/Desktop/Harrisburg University/Exploratory Data Analytics/FinalProject/ANLY506_RichyVarghese_FinalProject/Data/bikeVendors.csv", header = TRUE)
+#Creating a simple scatter plot
+plot(x = bikeVendors$Tampa.29ers*bikeVendors$price, y = bikeVendors$Wichita.Speed*bikeVendors$price, col = "blue", pch = 16, main = "col ='blue'")
+#Creating a histogram
+hist(x = bikeVendors$price, main = "Bike Price", xlab = "Price", xlim = c(0, 15000), breaks = 30, col = "papayawhip", border = "hotpink")
+#Creating 2 histograms in one
+hist(x = bikeVendors$price[bikeVendors$frame == "Aluminum"], main = "Two Histograms in one", xlab = "Price", ylab = "Frequency", breaks = 30, xlim = c(0, 15000), col = gray(0, .5))
+hist(x = bikeVendors$price[bikeVendors$frame == "Carbon"], breaks = 40, add = TRUE, col = gray(1, .8))
+#Creating a bar plot
+frame.price <- aggregate(price ~ frame, data = bikeVendors, FUN = mean)
+barplot(height = frame.price$price, names.arg = frame.price$frame, xlab = "Frames", ylab = "Average Price", main = "Average Price by Frame Type", col = "mistyrose")
+#Creating a pirate plot
+library(yarrr)
+yarrr::pirateplot(formula = price ~ frame, data = bikeVendors, main = "Pirateplot of bike prices", xlab = "Frame", ylab = "Price")
+```

@@ -1,0 +1,43 @@
+---
+title: "Week 13"
+author: "Richy Varghese"
+date: "February 16, 2019"
+output: html_document
+---
+
+```{r}
+library(tidyverse) #data manipulation
+library(cluster) #clustering algorithms
+library(factoextra) #clustering visualization
+library(dendextend) #for comparing two dendrograms
+df <- USArrests
+#Removing NAs
+df <- na.omit(df)
+#Scaling the dataframe
+df <- scale(df)
+#Dissimilarity matrix
+d <- dist(df, method = "euclidean")
+#Hierarchical clustering using Complete Linkage
+hc1 <- hclust(d, method = "complete" )
+# Computing with agnes()
+hc2 <- agnes(df, method = "ward")
+#Agglomerative coefficient
+hc2$ac
+#Plotting the dendrogram
+pltree(hc2, cex = 0.6, hang = -1, main = "Dendrogram of agnes")
+#Divisive hierarchical clustering
+#Computing divisive hierarchical clustering
+hc4 <- diana(df)
+#Divise coefficient
+hc4$dc
+#Plotting the dendrogram
+pltree(hc4, cex = 0.6, hang = -1, main = "Dendrogram of diana")
+#Determining optimal clusters
+#Elbow method
+fviz_nbclust(df, FUN = hcut, method = "wss")
+#Average silhouette method
+fviz_nbclust(df, FUN = hcut, method = "silhouette")
+#Gap statistic method
+gap_stat <- clusGap(df, FUN = hcut, nstart = 25, K.max = 10, B = 50)
+fviz_gap_stat(gap_stat)
+```

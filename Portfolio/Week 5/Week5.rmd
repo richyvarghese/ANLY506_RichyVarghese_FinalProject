@@ -1,0 +1,35 @@
+---
+title: "Week 5"
+author: "Richy Varghese"
+date: "February 16, 2019"
+output: html_document
+---
+
+###Importing a dataset
+```{r}
+library(tidyverse)
+a <-read_csv("a,b,c
+          1,2,3
+         4,5,6")
+```
+
+###Parsing vectors
+```{r}
+str(parse_logical(c("TRUE", "FALSE", "NA")))
+str(parse_integer(c("5", "2", "1")))
+parse_integer(c("5", "2", "1", "."), na = ".")
+str(parse_date(c("2019-02-16", "1988-09-29")))
+#>  Date[1:2], format: "2010-01-01" "1979-10-14"
+parse_double("10.55")
+parse_double("10,55", locale = locale(decimal_mark = ","))
+parse_number("$520")
+parse_number("77%")
+parse_number("I lost $100 today")
+charToRaw("Richy")
+parse_datetime("2019-02-16T0800")
+```
+
+###Writing to a file
+```{r}
+write_csv(a, "C:/Users/Richy/Desktop/Harrisburg University/Exploratory Data Analytics/FinalProject/ANLY506_RichyVarghese_FinalProject/Portfolio/Week 5/a.csv")
+```
