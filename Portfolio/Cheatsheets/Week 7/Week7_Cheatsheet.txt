@@ -1,0 +1,5 @@
+filter() - pick observations by values
+arrange() - reorder rows
+select() - pick variables by names
+mutate() - create new variables with functions of existing variables
+summarise() - collapse many values to a single summary

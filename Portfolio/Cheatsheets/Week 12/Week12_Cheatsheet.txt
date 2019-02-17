@@ -1,0 +1,7 @@
+get_dist() - get distance matrix
+fviz_dist() - visualize distance matrix
+kmeans() - compute k-means
+fviz_cluster() - visualize clusters
+fviz_nbclust(df, kmeans, method = "wss") - elbow method
+fviz_nbclust(df, kmeans, method = "silhouette") - average silhouette method
+fviz_gap_stat(gap_stat) - gap statistic method

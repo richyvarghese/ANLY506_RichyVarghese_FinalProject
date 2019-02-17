@@ -1,0 +1,14 @@
+cbind() - combine vectors as columns in a matrix
+rbind() - combine vectors as rows in a matrix
+matrix() - create a matrix
+data.frame() - create a dataframe
+head() - get top few rows
+tail() - get bottom few rows
+nrow() - get number of rows
+ncol() - get number of columns
+rownames() - get names of rows
+colnames() - get names of columns
+str() - get structure of dataset
+summary() - get summary statistics of dataset
+subset() - slice data by selecting rows to keep
+select() - slice data by selecting columns to keep

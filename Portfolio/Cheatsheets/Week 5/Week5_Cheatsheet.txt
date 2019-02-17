@@ -1,0 +1,7 @@
+read_csv() - to read csv files
+parse_integer() - to parse integers
+parse_date() - to parse dates
+parse_double() - to parse doubles
+parse_character() - to parse characters
+parse_factor() - to parse factors
+write_csv() - to write csv files

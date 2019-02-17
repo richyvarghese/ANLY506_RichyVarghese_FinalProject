@@ -1,0 +1,9 @@
+plot() - basic scatterplot
+hist() - basic histogram
+barplot() - basic barplot
+pirateplot() - plots in yarr package that show raw data, descriptive statistics, and inferential statistics in one plot
+abline() - add lines
+legend() - add legend
+pdf(), jpeg(), png() - save file in specific format
+par(mfrow) - arrange plots in matrix
+layout() - arrnage plots in complex layout
