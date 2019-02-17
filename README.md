@@ -1,5 +1,6 @@
 # ANLY506_RichyVarghese_FinalProject
 This is a repository to hold data, code/analysis, outputs and findings for the final ANLY 506 EDA project.
+This repository also holds data, code, outputs and cheatsheets for the Code Portfolio.
 
 ## Project Objectives
 1. Set up questions for EDA
