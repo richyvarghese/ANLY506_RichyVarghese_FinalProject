@@ -30,4 +30,10 @@
 4. Number of observations: 41284
 
 ## Analysis
-TBD
+Questions for EDA:-
+1. Which are the top 10 countries with highest life expectancy growth?
+2. Which are the top 10 countries with highest population growth?
+3. Which are the top 10 countries with highest income growth?
+4. Which regions have highest life expectancy growth?
+5. Which regions have highest population growth?
+6. Which regions have highest income growth?
