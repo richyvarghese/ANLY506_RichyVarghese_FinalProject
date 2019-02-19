@@ -1,6 +1,6 @@
 # ANLY506 Final EDA Project
-a) This is a repository to hold data, code/analysis, outputs and findings for the final ANLY 506 EDA project, which is an analysis of gapminder dataset.
-b) This repository also holds data, code, outputs and cheatsheets for the Code Portfolio, which contains various analysis and learning from each week of the course.
+1. This is a repository to hold data, code/analysis, outputs and findings for the final ANLY 506 EDA project, which is an analysis of gapminder dataset.
+2. This repository also holds data, code, outputs and cheatsheets for the Code Portfolio, which contains various analysis and learning from each week of the course.
 
 ## Project Approach
 1. Set up questions for EDA
