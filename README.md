@@ -1,20 +1,21 @@
-# ANLY506_RichyVarghese_FinalProject
-This is a repository to hold data, code/analysis, outputs and findings for the final ANLY 506 EDA project.
-This repository also holds data, code, outputs and cheatsheets for the Code Portfolio.
+# ANLY506 RichyVarghese FinalProject
+a) This is a repository to hold data, code/analysis, outputs and findings for the final ANLY 506 EDA project, which is an analysis of gapminder dataset.
+b) This repository also holds data, code, outputs and cheatsheets for the Code Portfolio, which contains various analysis and learning from each week of the course.
 
-## Project Objectives
+## Project Approach
 1. Set up questions for EDA
 2. Describe data
 3. Explore data
-4. Visualization
+4. Visualize
 5. Report findings
 
 ## Prerequisites
 1. R/R Studio
 2. Gapminder dataset
-3. Github/Githu desktop
-4. Basic understanding of R markedown
+3. Github/Github desktop
+4. Basic understanding of R markdown
 5. Knowledge of epicycle analysis
+6. Knowledge of functions required to perform analysis
 
 ## Data Description
 1. The dataset used for this project is "gapminder.csv" (source: https://raw.githubusercontent.com/birdsarah/pydata-nc/master/tutorial/assets/gapminder.csv)
