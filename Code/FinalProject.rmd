@@ -1,0 +1,210 @@
+---
+title: "Final EDA Project"
+author: "Richy Varghese"
+date: "February 19, 2019"
+output: html_document
+---
+
+###Packages
+```{r message=FALSE}
+#Loading packages
+library("dplyr")
+library("ggplot2")
+library("RColorBrewer")
+library("tidyverse")
+library("cluster")
+library("factoextra")
+library("dendextend")
+```
+
+###Data
+```{r}
+#Importing data
+gapminder <- read.csv("C:/Users/Richy/Desktop/Harrisburg University/Exploratory Data Analytics/FinalProject/ANLY506_RichyVarghese_FinalProject/Data/Data_EDAAssignment/gapminder.csv", header = TRUE)
+```
+
+###Data Exploration and Cleaning
+```{r}
+#Checking the data structure
+str(gapminder)
+#Country and Region should be factors, while Life, Population, Year and Income should be numerics hence converting the data to the right data types
+gapminder$Year <- factor(gapminder$Year)
+gapminder$population <- as.numeric(as.character(gapminder$population))
+gapminder$Year <- as.numeric(as.character(gapminder$Year))
+str(gapminder)
+#Now, all data types seem to be correct
+#Looking at the top and bottom few rows of the dataset
+head(gapminder)
+tail(gapminder)
+#There are NAs in population and income columns, hence checking count of NAs in every column
+colSums(is.na(gapminder))
+#On further exploring the data, using Excel, there seems to be missing data before 1950s, hence taking a subset of data from 1950 to 2015 for all countries
+gapminder_new <- gapminder %>% filter(Year >= 1950)
+#Looking at NAs in every column, the data looks much better
+colSums(is.na(gapminder_new))
+#Remove NAs from the new data set
+gapminder_new <- na.omit(gapminder_new)
+#Getting the descriptive summary of the dataset
+summary(gapminder_new)
+```
+
+###Analysis of Life Expectancy
+```{r}
+#Focussing the analysis on life expectancy since the values around within is smaller range, while population and income varies across countries and regions
+#Mean and median life expectancy for each region
+mean_life <- round(mean(gapminder_new$life), digits=3)
+median_life <- round(median(gapminder_new$life), digits=3)
+table1 <- gapminder_new %>% group_by(region) %>% summarise(mean(life), median(life))
+table1
+#Box plots for life expectancy for each region
+ggplot(gapminder_new, aes(x = region, y = life)) + geom_boxplot(outlier.colour = "red") + ggtitle("Box plots of life expectancy for each region 1950-2015")
+#Europe and Central Asia has the highest mean and median life expectancy values
+#Trend of life expectancy for each region
+newdata <- aggregate(life ~ region + Year, data = gapminder_new, mean)
+ggplot(newdata, aes(x = Year, y = life)) + geom_line(aes(color = region)) + ggtitle("Trend of life expectancy for each region 1950-2015")
+#Over the years, all regions seem to have an increasing life expectancy rate
+```
+
+###Life Expectancy vs Income
+```{r}
+ggplot(gapminder_new, aes(x = income, y = life)) + geom_point(color='darkblue') + ggtitle("Life expectancy vs Income")
+#With increasing income, life expectancy increases
+```
+
+###Population vs Life Expectancy
+```{r}
+ggplot(gapminder_new, aes(x = population, y = life)) + geom_point(color='darkblue') + ggtitle("Population vs Life expectancy")
+#With increasing life expectancy, population increases
+```
+
+###K-Means Clustering
+```{r}
+#Creating a subset of the data for 2015
+df <- gapminder_new %>% filter(Year == 2015) %>% select(Country, life, population, income)
+row.names(df) <- df[,1]
+df <- df %>% select(life, population, income)
+newdf <- df
+#Removing observations with NA
+df <- na.omit(df)
+#Scaling the dataframe
+df <- scale(df)
+#Creating the distance matrix
+distance <- get_dist(df)
+#Visualizing the distance matrix
+fviz_dist(distance, gradient = list(low = "pink", mid = "white", high = "red"))
+#Computing the k-means
+k <- kmeans(na.omit(df), centers = 5, nstart = 25)
+#Visualizing the clusters
+fviz_cluster(k, data = df)
+#Adding cluster numbers to the data
+newdf$cluster <- k$cluster
+
+#Determining optimal clusters
+#Elbow method
+set.seed(123)
+#Function to compute total within-cluster sum of square 
+wss <- function(k) {kmeans(df, k, nstart = 10 )$tot.withinss}
+# Computing and plotting wss for k = 1 to k = 15
+k.values <- 1:15
+#Extracting wss for 2-15 clusters
+wss_values <- map_dbl(k.values, wss)
+plot(k.values, wss_values, type="b", pch = 19, frame = FALSE, xlab="Number of clusters K", ylab="Total within-clusters sum of squares")
+#Optimal number of clusters = 4
+#Average silhouette method
+avg_sil <- function(k) {km.res <- kmeans(df, centers = k, nstart = 25)
+                        ss <- silhouette(km.res$cluster, dist(df))
+                        mean(ss[, 3])}
+#Computing and plotting wss for k = 2 to k = 15
+k.values <- 2:15
+#Extract avg silhouette for 2-15 clusters
+avg_sil_values <- map_dbl(k.values, avg_sil)
+plot(k.values, avg_sil_values, type = "b", pch = 19, frame = FALSE, xlab = "Number of clusters K", ylab = "Average Silhouettes")
+#Optimal number of clusters = 4
+#Gap statistic method
+#Computing gap statistic
+set.seed(123)
+gap_stat <- clusGap(df, FUN = kmeans, nstart = 25, K.max = 10, B = 50)
+fviz_gap_stat(gap_stat)
+#Optimal number of clusters = 1
+
+#Visualizing life expectancy, population and income by clusters
+ggplot(newdf, aes(x = cluster, y = life)) + geom_point(color='darkblue') + ggtitle("Life expectancy by clusters")
+ggplot(newdf, aes(x = cluster, y = population)) + geom_point(color='darkblue') + ggtitle("Population by clusters")
+ggplot(newdf, aes(x = cluster, y = income)) + geom_point(color='darkblue') + ggtitle("Income by clusters")
+table2 <- newdf %>% group_by(cluster) %>% summarise(mean(life), mean(population), mean(income))
+table2
+#Cluster with Kuwait, Qatar and Singapore (among others) seems to have the highest mean life expectancy, lowest mean population and highest mean income, which make countries in this cluster attractive. India has its own cluster with lower mean life expectancy, highest mean population and very low income, which forces their work force to migrate to other countries to improve their work and life standards
+```
+
+###Hierarchical Clustering
+```{r}
+#Creating a subset of the data for 2015
+df <- gapminder_new %>% filter(Year == 2015) %>% select(Country, life, population, income)
+row.names(df) <- df[,1]
+df <- df %>% select(life, population, income)
+newdf <- df
+#Removing observations with NA
+df <- na.omit(df)
+#Scaling the dataframe
+df <- scale(df)
+#Getting the Euclidean distance
+d <- dist(df, method = "euclidean")
+#Hierarchical clustering using Complete Linkage
+hc1 <- hclust(d, method = "complete" )
+# Computing with agnes()
+hc2 <- agnes(df, method = "ward")
+#Agglomerative coefficient
+hc2$ac
+#Plotting the dendrogram
+pltree(hc2, cex = 0.6, hang = -1, main = "Dendrogram of agnes")
+#Divisive hierarchical clustering
+#Computing divisive hierarchical clustering
+hc4 <- diana(df)
+#Divise coefficient
+hc4$dc
+#Plotting the dendrogram
+pltree(hc4, cex = 0.6, hang = -1, main = "Dendrogram of diana")
+#Plotting clusters but dividing the set into 4 clusters
+hc5 <- hclust(d, method = "ward.D2" )
+sub_grp <- cutree(hc5, k = 4)
+fviz_cluster(list(data = df, cluster = sub_grp))
+#This is pretty similar to that from K-Means
+
+#Determining optimal clusters
+#Elbow method
+fviz_nbclust(df, FUN = hcut, method = "wss")
+#Optimal number of clusters = 4
+#Average silhouette method
+fviz_nbclust(df, FUN = hcut, method = "silhouette")
+#Gap statistic method
+#Optimal number of clusters = 2
+gap_stat <- clusGap(df, FUN = hcut, nstart = 25, K.max = 10, B = 50)
+fviz_gap_stat(gap_stat)
+#Optimal number of clusters = 1
+#The number of clusters generated through both hierarchical and K-means clustering were pretty identical
+```
+
+###Findings
+####1. What are the mean and median life expectancy by region?
+#####Sub-Saharan Africa and South Asia have the lowest mean and median, while Europe & Central Asia has the highest.
+#####a) America: mean = 66.9, median = 68.7
+#####b) East Asia & Pacific: mean = 63.3, median = 63.8
+#####c) Europe & Central Asia: mean = 69.6, median = 70.2
+#####d) Middle East & North Africa: mean = 65.5, median = 69.2
+#####e) South Asia: mean = 54.8, median = 55.2
+#####f) Sub-Saharan Africa: mean = 53.3, median = 53.3
+
+####2. How does the life expectancy trend change over the course of time across regions?
+#####The life expectancy rate have been increasing over time across regions. Sub-Saharan Africa had a dip around the 2000's possibly due to epidemics/diseases, political turmoil, etc.
+
+####3. Is there a relationship between life expectancy and income?
+#####As the income increases, the life expectancy seems to increase and vice versa. This could indicate how much importance money plays in today's world to secure basic necessities.
+
+####4. Is there a relationship between life expectancy and population?
+#####As the life expectancy increases, the population seems to increase. This is true since less mortality will lead to more population.
+
+####5. For the year 1995, what is the optimal number of clusters?
+#####Using K-means clustering, 4 seems to be the optimal number, while using hierarchical clustering, 2 seems to be the optimal number.
+
+####6. Based on the K-means clustering output, which cluster is the best and which is the worst?
+#####The cluster with Brunei, Kuwait, Luxembourg, Qatar and Singapore seems to have the highest mean life expectancy, lowest mean population and highest mean income, which make countries in this cluster attractive. Being born and raised in Kuwait, I have experienced the quality of life, higher incomes and lower mortality rates, and hence confirms this result. India has its own cluster with lower mean life expectancy, highest mean population and very low income, which forces their work force to migrate to other countries to improve their work and life standards. Being an Indian citizen by origin, and living in India for a few years, I believe this is true, as like many others I have moved to the US in search of better opportunities, standard of living, income and lower population per region (as compared to India).
