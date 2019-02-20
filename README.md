@@ -16,6 +16,9 @@ This is a repository to hold data, code/analysis, outputs and findings for the f
 5. Knowledge of epicycle analysis
 6. Knowledge of functions required to perform analysis
 
+## Questions for EDA
+1. What are the mean and median life expectancy by region?
+
 ## Data Description
 1. The dataset used for this project is "gapminder.csv" (source: https://raw.githubusercontent.com/birdsarah/pydata-nc/master/tutorial/assets/gapminder.csv)
 2. Data contains demographic information of Life expectancy, Population and Income levels across 197 countries (and their geographical regions), between 1800 and 2015
@@ -28,6 +31,8 @@ This is a repository to hold data, code/analysis, outputs and findings for the f
   f) Region
 4. Number of observations: 41284
 
-## Analysis
-Questions for EDA:-
-1. What are the mean and median life expectancy by region?
+## Data Exploration, Analysis, Visualization
+Link to the analysis: https://github.com/richyvarghese/ANLY506_RichyVarghese_FinalProject/tree/master/Code
+
+## Findings
+
