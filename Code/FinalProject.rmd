@@ -3,7 +3,10 @@ title: "Final EDA Project"
 author: "Richy Varghese"
 date: "February 19, 2019"
 output: html_document
+link: https://github.com/richyvarghese/ANLY506_RichyVarghese_FinalProject
 ---
+
+###GITHUB LINK: https://github.com/richyvarghese/ANLY506_RichyVarghese_FinalProject
 
 ###Packages
 ```{r message=FALSE}
