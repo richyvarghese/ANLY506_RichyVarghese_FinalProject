@@ -1,6 +1,5 @@
 # ANLY506 Final EDA Project
-1. This is a repository to hold data, code/analysis, outputs and findings for the final ANLY 506 EDA project, which is an analysis of gapminder dataset.
-2. This repository also holds data, code, outputs and cheatsheets for the Code Portfolio, which contains various analysis and learning from each week of the course.
+[]This is a repository to hold data, code/analysis, outputs and findings for the final ANLY 506 EDA project, which is an analysis of gapminder dataset.
 
 ## Project Approach
 1. Set up questions for EDA
@@ -31,9 +30,4 @@
 
 ## Analysis
 Questions for EDA:-
-1. Which are the top 10 countries with highest life expectancy growth?
-2. Which are the top 10 countries with highest population growth?
-3. Which are the top 10 countries with highest income growth?
-4. Which regions have highest life expectancy growth?
-5. Which regions have highest population growth?
-6. Which regions have highest income growth?
+1. What are the mean and median life expectancy by region?
