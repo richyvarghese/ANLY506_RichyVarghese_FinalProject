@@ -37,7 +37,7 @@ This is a repository to hold data, code/analysis, outputs and findings for the f
 4. Number of observations: 41284
 
 ## Data Exploration, Analysis, Visualization
-Link to the analysis: https://github.com/richyvarghese/ANLY506_RichyVarghese_FinalProject/tree/master/Code
+Link: https://github.com/richyvarghese/ANLY506_RichyVarghese_FinalProject/tree/master/Code
 
 ## Findings
 ### 1. What are the mean and median life expectancy by region?
