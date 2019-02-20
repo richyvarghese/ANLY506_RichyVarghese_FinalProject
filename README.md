@@ -36,8 +36,14 @@ Link to the analysis: https://github.com/richyvarghese/ANLY506_RichyVarghese_Fin
 
 ## Findings
 ### 1. What are the mean and median life expectancy by region?
+   a) America: mean = 66.9, median = 68.7
+   b)
+   c) 
+   d)
+   e) 
+   f)
   Region                              Mean(life)     Median(life)`
-  America                             66.9           68.7
+  America                          66.9           68.7
   East Asia & Pacific                 63.3           63.8
   Europe & Central Asia               69.6           70.2
   Middle East & North Africa          65.5           68.2
